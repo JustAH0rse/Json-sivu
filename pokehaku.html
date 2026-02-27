@@ -33,7 +33,7 @@
     const pokeName = document.getElementById("pokemonName").value.toLowerCase();
     let name = document.getElementById("pokemonName").value;
 
-    fetch('https://pokeapi.co/api/v2/pokemon/${pokeName}')
+   fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
         .then(function(response){
             return response.json();
         })
@@ -53,4 +53,5 @@
 </script>
 
 </body>
+
 </html>
