@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digitekniikat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Digitekniikat json</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="toteutus.html">Toteutus</a></li>
+        <li class="nav-item"><a class="nav-link" href="pokehaku.html">Pokehaku</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<h1>Pokemon haku</h1>
+    <p>
+        <input type="text" id="pokemonName" placeholder="Enter Pokemon name">
+        <button onclick="poke()">Hae</button><br>
+        
+        <div id="nimi">Kirjoita laatikkoon Pokemonin nimi</div>
+        <p id="kuva2"></p>
+    </p>
+<script>
+    function poke(){
+    const pokeName = document.getElementById("pokemonName").value.toLowerCase();
+    let name = document.getElementById("pokemonName").value;
+
+    fetch('https://pokeapi.co/api/v2/pokemon/${pokeName}')
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(responseJson) {
+            pokekuva(responseJson);
+        })
+        .catch(function (error){
+            document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan </p>";
+        })
+        function pokekuva (obj) {
+            let pokeurl= obj.sprites.front_default;
+            document.getElementById("kuva2").innerHTML = "<img src=" + pokeurl + ">";
+            document.getElementById("nimi").innerHTML = "<b>" + name + "</b>";
+            document.getElementById("pokemonName").value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
