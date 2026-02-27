@@ -32,19 +32,19 @@
 <script>
 
 fetch('tietue.json')
-
-.then(function (response) {
+  .then(response => {
+    console.log("Response OK?", response.ok);
     return response.json();
-})
-
-.then(function (responseJson){
+  })
+  .then(responseJson => {
+    console.log("Data loaded:", responseJson);
     kerro(responseJson);
-})
-
-.catch(function (error) {
+  })
+  .catch(error => {
+    console.error("Fetch error:", error);
     document.getElementById("vastaus").innerHTML =
-        "<p>Tietoa ei pystytä hakemaan</p>";
-});
+      "<p>Tietoa ei pystytä hakemaan</p>";
+  });
 
 function kerro(obj) {
 
@@ -68,4 +68,5 @@ function kerro(obj) {
 }
 
 </script>
+
 </body>
