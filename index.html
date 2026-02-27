@@ -31,7 +31,7 @@
 <div id="vastaus"></div>
 <script>
 
-fetch('./tietue.JSON')
+fetch('tietue.JSON')
   .then(response => {
     console.log("Response OK?", response.ok);
     return response.json();
@@ -70,5 +70,6 @@ function kerro(obj) {
 </script>
 
 </body>
+
 
 
