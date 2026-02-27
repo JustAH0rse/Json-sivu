@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digitekniikat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Digitekniikat json</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="toteutus.html">Toteutus</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div id="vastaus"></div>
+</div>
+
+<script>
+fetch('./digitekniikat.json')
+  .then(response => {
+    if (!response.ok) throw new Error("JSON-tiedostoa ei löytynyt: " + response.status);
+    return response.json();
+  })
+  .then(obj => {
+    let tiedot = "<h1>" + obj.toteutus + "</h1>";
+    tiedot += "<p><b>Osallistujia:</b> " + obj.osallistujia + "</p>";
+    tiedot += "<p><b>Osallistujien nimet:</b> " + obj.osallistujat.join(", ") + "</p>";
+    tiedot += "<p><b>Alkamispäivä:</b> " + obj.alkamispaiva + "</p>";
+    tiedot += "<p><b>Loppumispäivä:</b> " + obj.loppumispaiva + "</p>";
+    tiedot += "<p><b>Kesto viikkoina:</b> " + obj.kesto_viikkoina + "</p>";
+    tiedot += "<p><img src='" + obj.kuva + "' class='img-fluid'></p>";
+
+    document.getElementById("vastaus").innerHTML = tiedot;
+  })
+  .catch(err => {
+    document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan</p>";
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>

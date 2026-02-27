@@ -1,0 +1,9 @@
+{
+  "toteutus": "Digitekniikat",
+  "osallistujia": 5,
+  "osallistujat": ["Mikko", "Liisa", "Janne", "Sari", "Teemu"],
+  "alkamispaiva": "13.1.2026",
+  "loppumispaiva": "14.3.2026",
+  "kesto_viikkoina": 8,
+  "kuva": "https://jaakkola.github.io/json/digi.JPG"
+}
