@@ -27,9 +27,17 @@
         
         <div id="nimi">Kirjoita laatikkoon Pokemonin nimi</div>
         <p id="kuva2"></p>
+
+       
+        <div id="kaannaAlue"></div>
+        <div id="lisatiedot"></div>
     </p>
+
 <script>
-    function poke(){
+
+let currentPokemon = null; 
+
+function poke(){
     const pokeName = document.getElementById("pokemonName").value.toLowerCase();
     let name = document.getElementById("pokemonName").value;
 
@@ -43,15 +51,43 @@
         .catch(function (error){
             document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan </p>";
         })
+
         function pokekuva (obj) {
             let pokeurl= obj.sprites.front_default;
             document.getElementById("kuva2").innerHTML = "<img src=" + pokeurl + ">";
             document.getElementById("nimi").innerHTML = "<b>" + name + "</b>";
             document.getElementById("pokemonName").value = "";
+
+            // LISÄTTY
+            currentPokemon = obj;
+
+            document.getElementById("kaannaAlue").innerHTML =
+            "<button class='btn btn-success mt-3' onclick='kaanna()'>Käännä</button>";
+
+            document.getElementById("lisatiedot").innerHTML = "";
         }
     }
+
+    function kaanna() {
+        if(currentPokemon == null) return;
+
+        let backImage = currentPokemon.sprites.back_default;
+
+        document.getElementById("kuva2").innerHTML =
+        "<img src='" + backImage + "'>";
+
+        let height = currentPokemon.height;
+        let weight = currentPokemon.weight;
+        let type = currentPokemon.types[0].type.name;
+
+        document.getElementById("lisatiedot").innerHTML =
+        "<h3>Lisätiedot</h3>" +
+        "<p><b>Pituus:</b> " + height + "</p>" +
+        "<p><b>Paino:</b> " + weight + "</p>" +
+        "<p><b>Tyyppi:</b> " + type + "</p>";
+    }
+
 </script>
 
 </body>
-
 </html>
