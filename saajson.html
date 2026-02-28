@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Helsingin sää</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Digitekniikat json</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="toteutus.html">Toteutus</a></li>
+        <li class="nav-item"><a class="nav-link" href="pokehaku.html">Pokehaku</a></li>
+        <li class="nav-item"><a class="nav-link" href="saajson.html">Helsingin sää</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+
+  <h1>Helsingin sää</h1>
+
+  <p><strong>Kellonaika:</strong> <span id="time"></span></p>
+
+  <div id="weatherBox" class="mt-4">
+    <h3 id="description"></h3>
+    <p><strong>Lämpötila:</strong> <span id="temp"></span> °C</p>
+    <p><strong>Tuulen nopeus:</strong> <span id="wind"></span> m/s</p>
+    <img id="icon" src="" alt="Sääkuvake">
+  </div>
+
+</div>
+
+<script>
+
+// Kellonaika
+function showTime() {
+    const now = new Date();
+    document.getElementById("time").innerHTML =
+        now.toLocaleTimeString("fi-FI");
+}
+
+// Haetaan säätiedot
+function getWeather() {
+
+    fetch("https://api.openweathermap.org/data/2.5/weather?id=658225&appid=665ecd56dfc08dbb50feb8b8f5034e28&lang=fi&units=metric")
+        .then(response => response.json())
+        .then(responseJson => {
+
+            // Tallennetaan data objektiin nimeltä data
+            let data = responseJson;
+
+            // otetaan tiedot
+            let temperature = data.main.temp;
+            let windSpeed = data.wind.speed;
+            let description = data.weather[0].description;
+            let iconCode = data.weather[0].icon;
+
+            // kuva
+            let iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+
+            // Päivitetään
+            document.getElementById("description").innerHTML = description;
+            document.getElementById("temp").innerHTML = temperature;
+            document.getElementById("wind").innerHTML = windSpeed;
+            document.getElementById("icon").src = iconUrl;
+        })
+        // error catch
+        .catch(error => {
+            console.log("Virhe haettaessa säätietoja:", error);
+        });
+}
+
+// Kun sivu latautuu
+window.onload = function() {
+    showTime();
+    getWeather();
+};
+
+</script>
+
+</body>
+</html>
