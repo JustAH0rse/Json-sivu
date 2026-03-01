@@ -1,19 +1,23 @@
 <!doctype html>
 <html lang="fi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"> <!-- merkistö -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- responsiivisuus -->
   <title>Usein kysytyt</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  
 
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
     <a class="navbar-brand" href="index.html">Digitekniikat json</a>
+
+    <!-- mobiilivalikko -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -28,24 +32,29 @@
   </div>
 </nav>
 
+<!-- tänne tulee JSON-data -->
 <div id="vastaus"></div>
+
 <script>
 
+// haetaan JSON-tiedosto
 fetch('tietue.JSON')
+
   .then(response => {
-    console.log("Response OK?", response.ok);
-    return response.json();
+    return response.json(); // muutetaan JSONiksi
   })
+
   .then(responseJson => {
-    console.log("Data loaded:", responseJson);
-    kerro(responseJson);
+    kerro(responseJson); // kutsutaan funktiota
   })
+
   .catch(error => {
-    console.error("Fetch error:", error);
     document.getElementById("vastaus").innerHTML =
-      "<p>Tietoa ei pystytä hakemaan</p>";
+      "<p>Tietoa ei pystytä hakemaan</p>"; // virhetilanne
   });
 
+
+// näyttää tiedot sivulla
 function kerro(obj) {
 
     let tiedot = "<h1>" + obj.otsikko + "</h1><br>"
@@ -58,21 +67,17 @@ function kerro(obj) {
 
     tiedot += "<h3>Aiheet</h3>";
 
+    // käydään tekniikat läpi
     for (var i = 0; i < obj.tekniikat.length; i++){
         tiedot += "<b>Aihe: " + obj.tekniikat[i].aihe + "</b><br>";
         tiedot += "<a href='" + obj.tekniikat[i].linkki + "'>" 
                + obj.tekniikat[i].linkki + "</a><br><br>";
     }
 
-    document.getElementById("vastaus").innerHTML = tiedot;
+    document.getElementById("vastaus").innerHTML = tiedot; // tulostus sivulle
 }
 
 </script>
 
 </body>
-
-
-
-
-
-
+</html>
