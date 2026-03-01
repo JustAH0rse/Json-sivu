@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<!--NavBar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
     <a class="navbar-brand" href="index.html">Digitekniikat json</a>
@@ -25,10 +25,12 @@
 
   <h1>Helsingin sää</h1>
 
+  <!--Kello tähän-->
   <p><strong>Kellonaika:</strong> <span id="time"></span></p>
 
+  <!--Sääboxi-->
   <div id="weatherBox" class="mt-4">
-    <h3 id="description"></h3>
+    <h3 id="description"></h3> <!--sään kuvaus-->
     <p><strong>Lämpötila:</strong> <span id="temp"></span> °C</p>
     <p><strong>Tuulen nopeus:</strong> <span id="wind"></span> m/s</p>
     <img id="icon" src="" alt="Sääkuvake">
@@ -85,4 +87,5 @@ window.onload = function() {
 </script>
 
 </body>
+
 </html>
