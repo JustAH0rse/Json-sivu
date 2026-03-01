@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="fi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <title>Digitekniikat</title>
+
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
     <a class="navbar-brand" href="index.html">Digitekniikat json</a>
@@ -22,74 +25,88 @@
 </nav>
 
 <h1>Pokemon haku</h1>
-    <p>
-        <input type="text" id="pokemonName" placeholder="Enter Pokemon name">
-        <button onclick="poke()">Hae</button><br>
-        
-        <div id="nimi">Kirjoita laatikkoon Pokemonin nimi</div>
-        <p id="kuva2"></p>
 
-       
-        <div id="kaannaAlue"></div>
-        <div id="lisatiedot"></div>
-    </p>
+<p>
+    <!-- hakukenttä -->
+    <input type="text" id="pokemonName" placeholder="Enter Pokemon name">
+    <button onclick="poke()">Hae</button><br>
+    
+    <!-- nimi ja kuva -->
+    <div id="nimi">Kirjoita laatikkoon Pokemonin nimi</div>
+    <p id="kuva2"></p>
+
+    <!-- nappi ja lisätiedot -->
+    <div id="kaannaAlue"></div>
+    <div id="lisatiedot"></div>
+</p>
 
 <script>
 
-let currentPokemon = null; 
+let currentPokemon = null; // tallennetaan haettu pokemon
 
+// hakee pokemonin API:sta
 function poke(){
+
     const pokeName = document.getElementById("pokemonName").value.toLowerCase();
     let name = document.getElementById("pokemonName").value;
 
-   fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
         .then(function(response){
-            return response.json();
+            return response.json(); // muutetaan JSONiksi
         })
         .then(function(responseJson) {
-            pokekuva(responseJson);
+            pokekuva(responseJson); // näytetään tiedot
         })
         .catch(function (error){
-            document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan </p>";
+            document.getElementById("vastaus").innerHTML =
+            "<p>Tietoa ei pystytä hakemaan </p>"; // virhe
         })
 
+        // näyttää kuvan ja nimen
         function pokekuva (obj) {
-            let pokeurl= obj.sprites.front_default;
-            document.getElementById("kuva2").innerHTML = "<img src=" + pokeurl + ">";
-            document.getElementById("nimi").innerHTML = "<b>" + name + "</b>";
-            document.getElementById("pokemonName").value = "";
 
-            // LISÄTTY
-            currentPokemon = obj;
+            let pokeurl = obj.sprites.front_default;
 
+            document.getElementById("kuva2").innerHTML =
+            "<img src=" + pokeurl + ">";
+
+            document.getElementById("nimi").innerHTML =
+            "<b>" + name + "</b>";
+
+            document.getElementById("pokemonName").value = ""; // tyhjentää kentän
+
+            currentPokemon = obj; // tallennetaan data myöhempää käyttöä varten
+
+            // lisätään käännä-nappi
             document.getElementById("kaannaAlue").innerHTML =
             "<button class='btn btn-success mt-3' onclick='kaanna()'>Käännä</button>";
 
             document.getElementById("lisatiedot").innerHTML = "";
         }
-    }
+}
 
-    function kaanna() {
-        if(currentPokemon == null) return;
+// näyttää takakuvan ja lisätiedot
+function kaanna() {
 
-        let backImage = currentPokemon.sprites.back_default;
+    if(currentPokemon == null) return; // jos ei ole dataa
 
-        document.getElementById("kuva2").innerHTML =
-        "<img src='" + backImage + "'>";
+    let backImage = currentPokemon.sprites.back_default;
 
-        let height = currentPokemon.height;
-        let weight = currentPokemon.weight;
-        let type = currentPokemon.types[0].type.name;
+    document.getElementById("kuva2").innerHTML =
+    "<img src='" + backImage + "'>";
 
-        document.getElementById("lisatiedot").innerHTML =
-        "<h3>Lisätiedot</h3>" +
-        "<p><b>Pituus:</b> " + height + "</p>" +
-        "<p><b>Paino:</b> " + weight + "</p>" +
-        "<p><b>Tyyppi:</b> " + type + "</p>";
-    }
+    let height = currentPokemon.height;
+    let weight = currentPokemon.weight;
+    let type = currentPokemon.types[0].type.name;
+
+    document.getElementById("lisatiedot").innerHTML =
+    "<h3>Lisätiedot</h3>" +
+    "<p><b>Pituus:</b> " + height + "</p>" +
+    "<p><b>Paino:</b> " + weight + "</p>" +
+    "<p><b>Tyyppi:</b> " + type + "</p>";
+}
 
 </script>
 
 </body>
 </html>
-
